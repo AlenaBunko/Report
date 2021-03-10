@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление покупки</title>
+</head>
+<body>
+<div th:fragment="addPurchaseFragment">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <dialog id="addPurchaseDialog">
+        <section>
+            <p>
+                <label class="myLabel" id="productLabel" for="product">Покупка: </label>
+                <input id="product" type="text" name="product" />
+            </p>
+            <p>
+                <label class="myLabel">Сумма покупки: </label>
+                <select id="amount" type="text" name="purchaseAmount" >
+                </select>
+            </p>
+            <p>
+                <label class="myLabel" id="dateLabel">Дата покупки:</label>
+                <select id="date" type="date" name="date" >
+                </select>
+            </p>
+            <p>
+                <label class="myLabel">Гарантийный срок:</label>
+                <input id="warranty" type="number" name="warrantyPeriod" step="1"/>
+            </p>
+            <input name="id" id="productIdInput" hidden/>
+        </section>
+        <menu>
+            <button type="button" onclick="addPurchaseDialogFunctions.submit()">Сохранить</button>
+            <button type="reset" id="cancel" onclick="addPurchaseDialogFunctions.cancelEvent()">Отмена</button>
+        </menu>
+        <span id="error"></span>
+    </dialog>
+    <script type="text/javascript" th:src="@{/js/addPurchaseDialog.js}"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+</head>
+<body>
+<h2>Личный кабинет<span class="common-text-style" th:text="${user.getLogin}"></span> </h2>
+<table border='1px' id="userTable">
+    <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+    </tr>
+    <tr>
+        <td th:text="${user.getFirstName}"></td>
+        <td th:text="${user.getLastName}"></td>
+    </tr>
+</table>
+<div th:insert="~{addPurchase :: addPurchaseFragment}"></div>
+<p>
+<div th:insert="~{expenseTable::expenseFragment}"></div>
+</p>
+<p>
+    <button id="showDialogBt" onclick="addPurchaseDialogFunctions.setCreate()">Добавить покупку</button>
+</p>
+<script>
+    (function () {
+        let showBt = document.getElementById('showDialogBt');
+        showBt.addEventListener('click', function () {
+            let addPurchaseDialog = document.getElementById('addPurchaseDialog');
+            addPurchaseDialog.showModal();
+        });
+    })();
+</script>
+</body>
+</html>
