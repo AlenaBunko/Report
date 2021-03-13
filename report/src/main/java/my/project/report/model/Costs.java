@@ -31,7 +31,7 @@ public class Costs {
         this.id = id;
     }
 
-    @Column(name = "product", nullable = false)
+    @Column(name = "product")
     public String getProduct() {
         return product;
     }
@@ -40,7 +40,7 @@ public class Costs {
         this.product = product;
     }
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "amount")
     public Long getPurchaseAmount() {
         return purchaseAmount;
     }
@@ -49,8 +49,8 @@ public class Costs {
         this.purchaseAmount = purchaseAmount;
     }
 
-    @Column(name = "date", nullable = false)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "purchase_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     public LocalDate getDate() {
         return date;
     }

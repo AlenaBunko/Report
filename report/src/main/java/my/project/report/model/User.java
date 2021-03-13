@@ -1,12 +1,16 @@
 package my.project.report.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     private Long id;
     private String firstName;
@@ -68,6 +72,42 @@ public class User {
 
     public void setCosts(List<Costs> costs) {
         this.costs = costs;
+    }
+
+    @Override
+    @Transient
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new HashSet<>();
+    }
+
+    @Override
+    @Transient
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @Transient
+    public boolean isEnabled() {
+        return true;
     }
 
 }

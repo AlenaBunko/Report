@@ -1,14 +1,13 @@
 package my.project.report.controller;
 
 import my.project.report.lib.dto.RegisterFormDTO;
+import my.project.report.lib.dto.UserDTO;
+import my.project.report.lib.exception.UserNotFoundException;
 import my.project.report.model.User;
 import my.project.report.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,7 @@ public class AuthController {
                                  ModelAndView view, HttpServletRequest request) {
         try {
             User user = userService.createUser(registerForm);
-            request.login(user.getLogin(), registerForm.getPassword());
+            request.login(user.getUsername(), registerForm.getPassword());
             view.setViewName("redirect:/user/userPage");
             view.addObject("user", user);
         } catch (Exception e) {
@@ -45,4 +44,5 @@ public class AuthController {
         }
         return view;
     }
+
 }
