@@ -1,5 +1,8 @@
 package my.project.report.controller;
 
+import my.project.report.lib.exception.CostsNotFoundException;
+import my.project.report.lib.exception.UserNotFoundException;
+import my.project.report.model.Costs;
 import my.project.report.model.User;
 import my.project.report.service.ICostsService;
 import my.project.report.service.IUserService;
@@ -9,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
@@ -35,6 +37,7 @@ public class UserController {
 
     @GetMapping("/userPage")
     public ModelAndView userPage(Principal principal, ModelAndView view) {
+
         String login = ((User)(((UsernamePasswordAuthenticationToken) principal).getPrincipal())).getLogin();
         if (login != null) {
             try {
@@ -42,6 +45,7 @@ public class UserController {
                 view.setViewName("userPage");
                 view.addObject(USER, user);
             } catch (Exception e) {
+                e.printStackTrace();
                 view.addObject("error", e.getMessage());
                 view.setViewName("login");
             }
@@ -54,9 +58,26 @@ public class UserController {
     @ResponseBody
     @PostMapping("/addPurchase")
     public ModelAndView addPurchase(@RequestParam String product, @RequestParam Long purchaseAmount, @RequestParam LocalDate date,
-                                    @RequestParam String warrantyPeriod, @SessionAttribute(USER) User user, ModelAndView view) throws IOException {
-        view.setViewName("redirect:/user/userPage");
-        costsService.createCosts(user, product, purchaseAmount, date, warrantyPeriod);
+                                    @RequestParam Integer warrantyPeriod, @SessionAttribute(USER) User user, ModelAndView view) throws IOException {
+
+        Costs costs= costsService.createCosts(user, product, purchaseAmount, date, warrantyPeriod);
+        view.setViewName("userPage");
+        user.getCosts().add(costs);
+        return view;
+    }
+
+    @ResponseBody
+    @PostMapping("/updatePurchase")
+    public ModelAndView updateCar(@RequestParam Long id, @RequestParam String product, @RequestParam Long purchaseAmount, @RequestParam LocalDate date,
+                                         @RequestParam Integer warrantyPeriod, ModelAndView view) {
+        try {
+            Costs cost = costsService.updateCosts(id, product, purchaseAmount, date, warrantyPeriod);
+            view.setViewName("userPage");
+        }
+        catch ( IOException | CostsNotFoundException e) {
+            e.printStackTrace();
+            view.addObject("error", e.getMessage());
+        }
         return view;
     }
 }

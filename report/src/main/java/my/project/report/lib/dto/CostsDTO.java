@@ -10,7 +10,7 @@ public class CostsDTO {
 
     private LocalDate date;
 
-    private String warrantyPeriod;
+    private Integer warrantyPeriod;
 
     public String getProduct() {
         return product;
@@ -36,11 +36,11 @@ public class CostsDTO {
         this.date = date;
     }
 
-    public String getWarrantyPeriod() {
+    public Integer getWarrantyPeriod() {
         return warrantyPeriod;
     }
 
-    public void setWarrantyPeriod(String warrantyPeriod) {
+    public void setWarrantyPeriod(Integer warrantyPeriod) {
         this.warrantyPeriod = warrantyPeriod;
     }
 }

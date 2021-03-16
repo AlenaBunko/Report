@@ -22,7 +22,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     private final BCryptPasswordEncoder encoder;
 
-
+@Autowired
     public UserService(IUserDAO userDAO, BCryptPasswordEncoder encoder) {
         this.userDAO = userDAO;
         this.encoder = encoder;
@@ -51,7 +51,7 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return (UserDetails) userDAO.getUserByLogin(s, false)
+        return userDAO.getUserByLogin(s, false)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь " + s + " не найден"));
     }
 }

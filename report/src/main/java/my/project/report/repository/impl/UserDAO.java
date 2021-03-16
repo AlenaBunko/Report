@@ -50,8 +50,17 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public Optional<User> getUserByLogin(String login, boolean initLazyObjects) {
-        return Optional.empty();
+   public Optional<User> getUserByLogin(String login, boolean initLazyObjects) {
+        TypedQuery<User> query = manager.createNamedQuery(User.GET_USER_BY_LOGIN, User.class);
+        query.setParameter("login", login);
+        List<User> users = query.getResultList();
+        if (users.isEmpty()) {
+            return Optional.empty();
+        }
+        if (initLazyObjects) {
+            initLazyCosts(users);
+        }
+        return Optional.of(users.get(0));
     }
 
     private void initLazyCosts(List<User> users) {

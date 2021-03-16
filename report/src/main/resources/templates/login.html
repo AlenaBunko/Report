@@ -6,10 +6,11 @@
 </head>
 <body>
 <h3>Вход в личный кабинет</h3>
-<form action="@{/login}" method="post">
+<form action="/login" method="post" >
+    <span id="error" style="color: red; display: none"></span>
     <p>
         <label>Логин:</label>
-        <input id="login" type="text" name="login" placeholder="Логин" />
+        <input id="login" type="text" name="username" placeholder="Логин" />
     </p>
     <p>
         <label>Пароль:</label>

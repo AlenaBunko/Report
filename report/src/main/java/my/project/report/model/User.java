@@ -4,19 +4,30 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@NamedQueries(value = {
+        @NamedQuery(name = User.GET_USER_BY_LOGIN, query = "SELECT u FROM User u where u.login=:login")
+})
 public class User implements UserDetails {
 
+    public static final String GET_USER_BY_LOGIN = "get.by.login";
+
     private Long id;
+
     private String firstName;
+
     private String lastName;
+
     private String login;
+
     private String password;
+
     private List<Costs> costs;
 
     @Id
@@ -67,6 +78,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     public List<Costs> getCosts() {
+        if(costs == null){
+            costs = new ArrayList<>();
+        }
         return costs;
     }
 

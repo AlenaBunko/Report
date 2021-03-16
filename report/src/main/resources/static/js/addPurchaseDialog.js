@@ -17,12 +17,12 @@ let addPurchaseDialogFunctions = (function () {
                 purchaseAmountIn = document.getElementById('purchaseAmount'),
                 dateIn = document.getElementById('date'),
                 warrantyPeriodIn = document.getElementById('warrantyPeriod'),
-                idInput = document.getElementById('idInput');
+                productIdInput = document.getElementById('productIdInput');
             productIn.value = product;
             purchaseAmountIn.value = purchaseAmount;
             dateIn.value = date;
             warrantyPeriodIn.value = warrantyPeriod;
-            idInput.value = idInput;
+            productIdInput.value = id;
             addPurchaseDialogFunctions.isCreate = false;
             dialog.show();
         };
@@ -33,7 +33,7 @@ let addPurchaseDialogFunctions = (function () {
                 purchaseAmount = document.getElementById('purchaseAmount').value,
                 date = document.getElementById('date').value,
                 warrantyPeriod = document.getElementById('warrantyPeriod').value,
-                carIdInput = document.getElementById('productIdInput').value,
+                productIdInput = document.getElementById('productIdInput').value,
                 form = new FormData();
             form.append('product', product);
             form.append('purchaseAmount', purchaseAmount);

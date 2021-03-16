@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "costs")
@@ -18,7 +17,7 @@ public class Costs {
     private String product;
     private Long purchaseAmount;
     private LocalDate date;
-    private String warrantyPeriod;
+    private Integer warrantyPeriod;
     private User user;
 
     @Id
@@ -60,16 +59,16 @@ public class Costs {
     }
 
     @Column(name = "warranty_period")
-    public String getWarrantyPeriod() {
+    public Integer getWarrantyPeriod() {
         return warrantyPeriod;
     }
 
-    public void setWarrantyPeriod(String warrantyPeriod) {
+    public void setWarrantyPeriod(Integer warrantyPeriod) {
         this.warrantyPeriod = warrantyPeriod;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_user_id")
     public User getUser() {
         return user;
     }

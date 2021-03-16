@@ -4,6 +4,7 @@ import my.project.report.lib.dto.CostsDTO;
 import my.project.report.lib.exception.CostsNotFoundException;
 import my.project.report.model.Costs;
 import my.project.report.model.User;
+import my.project.report.repository.ICostsDAO;
 import my.project.report.repository.impl.CostsDAO;
 import my.project.report.service.ICostsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +18,22 @@ import java.util.Optional;
 @Service
 public class CostsService implements ICostsService {
 
-    private final CostsDAO costsDAO;
+    private final ICostsDAO costsDAO;
 
 @Autowired
-    public CostsService(CostsDAO costsDAO) {
+    public CostsService(ICostsDAO costsDAO) {
         this.costsDAO = costsDAO;
     }
 
     @Override
-    public Costs createCosts(User user, String product, Long purchaseAmount, LocalDate date, String warrantyPeriod) throws IOException {
-        Costs cost = new Costs();
-        cost.setProduct(product);
-        cost.setPurchaseAmount(purchaseAmount);
-        cost.setDate(date);
-        cost.setWarrantyPeriod(warrantyPeriod);
-        costsDAO.save(cost);
-        return cost;
+    public Costs createCosts(User user, String product, Long purchaseAmount, LocalDate date, Integer warrantyPeriod) throws IOException {
+        Costs costs = new Costs();
+        costs.setProduct(product);
+        costs.setPurchaseAmount(purchaseAmount);
+        costs.setDate(date);
+        costs.setWarrantyPeriod(warrantyPeriod);
+        costsDAO.save(costs);
+        return costs;
     }
 
     @Override
@@ -42,26 +43,26 @@ public class CostsService implements ICostsService {
 
     @Override
     @Transactional
-    public Costs updateCosts(Long costsId, String product, Long purchaseAmount, LocalDate date, String warrantyPeriod) throws IOException, CostsNotFoundException {
-        Costs cost = getById(costsId);
-        cost.setProduct(product);
-        cost.setPurchaseAmount(purchaseAmount);
-        cost.setDate(date);
-        cost.setWarrantyPeriod(warrantyPeriod);
-        costsDAO.update(cost);
-        return cost;
+    public Costs updateCosts(Long id, String product, Long purchaseAmount, LocalDate date, Integer warrantyPeriod) throws IOException, CostsNotFoundException {
+        Costs costs = getById(id);
+        costs.setProduct(product);
+        costs.setPurchaseAmount(purchaseAmount);
+        costs.setDate(date);
+        costs.setWarrantyPeriod(warrantyPeriod);
+        costsDAO.update(costs);
+        return costs;
     }
 
     @Override
     public void updateCosts(Long id, CostsDTO costsDTO) throws CostsNotFoundException {
         Optional<Costs> opt = costsDAO.getById(id);
         if (opt.isPresent()) {
-            Costs cost = opt.get();
-            cost.setProduct(costsDTO.getProduct());
-            cost.setPurchaseAmount(costsDTO.getPurchaseAmount());
-            cost.setDate(costsDTO.getDate());
-            cost.setWarrantyPeriod(costsDTO.getWarrantyPeriod());
-            costsDAO.update(cost);
+            Costs costs = opt.get();
+            costs.setProduct(costsDTO.getProduct());
+            costs.setPurchaseAmount(costsDTO.getPurchaseAmount());
+            costs.setDate(costsDTO.getDate());
+            costs.setWarrantyPeriod(costsDTO.getWarrantyPeriod());
+            costsDAO.update(costs);
         } else {
             throw new CostsNotFoundException();
         }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -43,6 +44,7 @@ public class AuthController {
             view.addObject("loginError", e.getMessage());
         }
         return view;
+
     }
 
 }
