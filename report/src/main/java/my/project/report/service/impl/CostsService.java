@@ -29,6 +29,7 @@ public class CostsService implements ICostsService {
     public Costs createCosts(User user, String product, Long purchaseAmount, LocalDate date, Integer warrantyPeriod) throws IOException {
         Costs costs = new Costs();
         costs.setProduct(product);
+        costs.setUser(user);
         costs.setPurchaseAmount(purchaseAmount);
         costs.setDate(date);
         costs.setWarrantyPeriod(warrantyPeriod);

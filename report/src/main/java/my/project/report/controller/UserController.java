@@ -1,5 +1,7 @@
 package my.project.report.controller;
 
+import my.project.report.lib.dto.CostsDTO;
+import my.project.report.lib.dto.RegisterFormDTO;
 import my.project.report.lib.exception.CostsNotFoundException;
 import my.project.report.lib.exception.UserNotFoundException;
 import my.project.report.model.Costs;
@@ -38,7 +40,7 @@ public class UserController {
     @GetMapping("/userPage")
     public ModelAndView userPage(Principal principal, ModelAndView view) {
 
-        String login = ((User)(((UsernamePasswordAuthenticationToken) principal).getPrincipal())).getLogin();
+        String login = ((User) (((UsernamePasswordAuthenticationToken) principal).getPrincipal())).getLogin();
         if (login != null) {
             try {
                 User user = userService.findUserByLogin(login, Boolean.TRUE);
@@ -57,28 +59,31 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/addPurchase")
-    public ModelAndView addPurchase(@RequestParam String product, @RequestParam Long purchaseAmount, @RequestParam LocalDate date,
-                                    @RequestParam Integer warrantyPeriod, @SessionAttribute(USER) User user, ModelAndView view) throws IOException {
-
-        Costs costs= costsService.createCosts(user, product, purchaseAmount, date, warrantyPeriod);
-        view.setViewName("userPage");
-        user.getCosts().add(costs);
-        return view;
+    public String addPurchase(@RequestParam(value= "product") String product, @RequestParam(value= "amount") Long purchaseAmount,
+                              @RequestParam(value= "date") LocalDate date, @RequestParam(value= "warranty") Integer warrantyPeriod,
+                              @ModelAttribute(USER) User user) throws IOException {
+        Costs costs= null;
+        try {
+            costs = costsService.createCosts(user, product, purchaseAmount, date, warrantyPeriod);
+            user.getCosts().add(costs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/user/userPage";
     }
+
 
     @ResponseBody
     @PostMapping("/updatePurchase")
-    public ModelAndView updateCar(@RequestParam Long id, @RequestParam String product, @RequestParam Long purchaseAmount, @RequestParam LocalDate date,
-                                         @RequestParam Integer warrantyPeriod, ModelAndView view) {
+    public String updateCar(@RequestParam Long id, @RequestParam String product, @RequestParam Long purchaseAmount,
+                            @RequestParam LocalDate date, @RequestParam Integer warrantyPeriod) {
+        Costs costs= null;
         try {
-            Costs cost = costsService.updateCosts(id, product, purchaseAmount, date, warrantyPeriod);
-            view.setViewName("userPage");
-        }
-        catch ( IOException | CostsNotFoundException e) {
+            costs = costsService.updateCosts(id, product, purchaseAmount, date, warrantyPeriod);
+        } catch (IOException | CostsNotFoundException e) {
             e.printStackTrace();
-            view.addObject("error", e.getMessage());
         }
-        return view;
+        return "redirect:/user/userPage";
     }
 }
 

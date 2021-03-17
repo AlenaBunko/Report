@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 
 @EntityScan(basePackages = "my.project.report.model")
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "my.project.report.*")
 public class ReportApplication {
 
 	public static void main(String[] args) {
