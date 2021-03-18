@@ -57,7 +57,7 @@ public class UserController {
         return view;
     }
 
-    @ResponseBody
+
     @PostMapping("/addPurchase")
     public String addPurchase(@RequestParam(value= "product") String product, @RequestParam(value= "amount") Long purchaseAmount,
                               @RequestParam(value= "date") LocalDate date, @RequestParam(value= "warranty") Integer warrantyPeriod,
@@ -73,7 +73,7 @@ public class UserController {
     }
 
 
-    @ResponseBody
+
     @PostMapping("/updatePurchase")
     public String updateCar(@RequestParam Long id, @RequestParam String product, @RequestParam Long purchaseAmount,
                             @RequestParam LocalDate date, @RequestParam Integer warrantyPeriod) {

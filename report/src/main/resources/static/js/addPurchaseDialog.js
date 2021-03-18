@@ -2,7 +2,7 @@ let addPurchaseSubmit = (function() {
 
 let submitFn = function() {
 let form= document.getElementById('addPurchaseForm');
-form.action = '/user/userPage';
+form.action = '/user/addPurchase';
 form.method = 'POST';
 form.submit();
 };
