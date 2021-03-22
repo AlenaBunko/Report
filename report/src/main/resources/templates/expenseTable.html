@@ -7,28 +7,21 @@
 <body>
 <div th:fragment="expenseFragment">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <table border="1px" id="tableId">
+    <table id="tableId" border="1px" >
         <thead>
-        <th>Покупка</th>
-        <th>Сумма покупки</th>
-        <th>Дата покупки</th>
-        <th>Гарантийный срок</th>
-        <th>Редактировать</th>
+          <tr>
+            <th>Покупка</th>
+            <th>Сумма покупки</th>
+            <th>Дата покупки</th>
+            <th>Гарантийный срок</th>
+        </tr>
         </thead>
         <tbody>
-        <tr th:each="costs: ${user.costs}">
-            <td th:text="${costs.product}" ></td>
+        <tr align="center" th:each="costs: ${user.costs}">
+            <td align="left" th:text="${costs.product}" ></td>
             <td th:text="${costs.purchaseAmount}"></td>
             <td th:text="${costs.date}"></td>
             <td th:text="${costs.warrantyPeriod}"></td>
-            <td style="text-align: center">
-                <i class="fa fa-pencil fa-2x" aria-hidden="true" style="align-self: center" th:attr="onclick=|addPurchaseDialogFunctions.onTableClick('${costs.product}',
-                                                                                                                            '${costs.id}',
-                                                                                                                            '${costs.purchaseAmount}',
-                                                                                                                            '${costs.date}',
-                                                                                                                            '${costs.warrantyPeriod}')|">
-                </i>
-            </td>
             <td th:text="${costs.id}" hidden></td>
         </tr>
         </tbody>

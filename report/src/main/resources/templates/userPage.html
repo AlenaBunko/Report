@@ -18,7 +18,7 @@
 </table>
 <div th:insert="~{addPurchase :: addPurchaseFragment}"></div>
 <p>
-<div th:insert="~{expenseTable::expenseFragment}"></div>
+<div th:replace="~{expenseTable::expenseFragment}"></div>
 </p>
 <p>
     <button id="showDialogBt">Добавить покупку</button>

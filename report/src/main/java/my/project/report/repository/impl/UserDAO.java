@@ -43,13 +43,6 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public User findById(Long id) {
-        User user = manager.find(User.class, id);
-        initLazyCosts(Collections.singletonList(user));
-        return user;
-    }
-
-    @Override
    public Optional<User> getUserByLogin(String login, boolean initLazyObjects) {
         TypedQuery<User> query = manager.createNamedQuery(User.GET_USER_BY_LOGIN, User.class);
         query.setParameter("login", login);

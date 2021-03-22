@@ -1,9 +1,6 @@
 package my.project.report.controller;
 
-import my.project.report.lib.dto.CostsDTO;
-import my.project.report.lib.dto.RegisterFormDTO;
 import my.project.report.lib.exception.CostsNotFoundException;
-import my.project.report.lib.exception.UserNotFoundException;
 import my.project.report.model.Costs;
 import my.project.report.model.User;
 import my.project.report.service.ICostsService;
@@ -16,7 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -57,34 +57,25 @@ public class UserController {
         return view;
     }
 
-
+    @ResponseBody
     @PostMapping("/addPurchase")
-    public String addPurchase(@RequestParam(value= "product") String product, @RequestParam(value= "amount") Long purchaseAmount,
-                              @RequestParam(value= "date") LocalDate date, @RequestParam(value= "warranty") Integer warrantyPeriod,
-                              @ModelAttribute(USER) User user) throws IOException {
-        Costs costs= null;
+    public ModelAndView addPurchase(@RequestParam String product, @RequestParam Long purchaseAmount,
+                                    @RequestParam String date, @RequestParam Integer warrantyPeriod,
+                                    @SessionAttribute(USER) User user, ModelAndView view) throws IOException {
+        Costs costs = null;
         try {
-            costs = costsService.createCosts(user, product, purchaseAmount, date, warrantyPeriod);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date d = formatter.parse(date);
+            costs = costsService.createCosts(user, product, purchaseAmount, d, warrantyPeriod);
             user.getCosts().add(costs);
-        } catch (IOException e) {
+            view.setViewName("redirect:/user/userPage");
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
+            view.setViewName("error");
         }
-        return "redirect:/user/userPage";
+        return view;
     }
 
-
-
-    @PostMapping("/updatePurchase")
-    public String updateCar(@RequestParam Long id, @RequestParam String product, @RequestParam Long purchaseAmount,
-                            @RequestParam LocalDate date, @RequestParam Integer warrantyPeriod) {
-        Costs costs= null;
-        try {
-            costs = costsService.updateCosts(id, product, purchaseAmount, date, warrantyPeriod);
-        } catch (IOException | CostsNotFoundException e) {
-            e.printStackTrace();
-        }
-        return "redirect:/user/userPage";
-    }
 }
 
 

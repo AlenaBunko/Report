@@ -8,9 +8,6 @@ public interface ICostsDAO {
 
     public void save(Costs costs);
 
-    void update(Costs costs);
-
     Optional<Costs> getById(Long id);
 
-    void delete(Long id);
 }

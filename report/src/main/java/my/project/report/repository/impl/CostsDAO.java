@@ -24,18 +24,8 @@ public class CostsDAO implements ICostsDAO {
     }
 
     @Override
-    public void update(Costs costs) {
-        Session session = manager.unwrap(Session.class);
-        session.saveOrUpdate(costs);
-    }
-
-    @Override
     public Optional<Costs> getById(Long id) {
         return Optional.of(manager.find(Costs.class, id));
     }
 
-    @Override
-    public void delete(Long id) {
-        manager.createNamedQuery(Costs.DELETE_QUERY).setParameter("id", id).executeUpdate();
-    }
 }

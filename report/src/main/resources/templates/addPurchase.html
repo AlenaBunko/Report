@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -6,8 +6,8 @@
 </head>
 <body>
 <div th:fragment="addPurchaseFragment">
-    <dialog id="addPurchaseDialog">
-        <form id="addCPurchaseForm" onsubmit="addPurchaseSubmit.submit()">
+    <dialog id="addPurchaseDialog" >
+        <form id="addPurchaseForm" onsubmit="addPurchaseSubmit.submit()">
             <section>
                 <p>
                     <label for="product">Покупка: </label>
@@ -25,16 +25,14 @@
                     <label >Гарантийный срок:</label>
                     <input id="warranty" type="number" name="warrantyPeriod" step="1"/>
                 </p>
-                <input name="id" id="productIdInput" hidden/>
             </section>
             <menu>
                 <button type="submit" >Сохранить</button>
-                <button type="reset" id="cancel">Отмена</button>
+                <button type="reset" id="cancel" onclick="addPurchaseSubmit.cancelEvent()">Отмена</button>
             </menu>
-            <span id="error"></span>
         </form>
     </dialog>
-    <script type="text/javascript" th:src="@{static.jc/addPurchaseDialog.js}"></script>
+    <script type="text/javascript" th:src="@{/js/addPurchaseDialog.js}"></script>
 </div>
 </body>
 </html>

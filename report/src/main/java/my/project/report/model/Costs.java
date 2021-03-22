@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "costs")
@@ -16,7 +18,7 @@ public class Costs {
     private Long id;
     private String product;
     private Long purchaseAmount;
-    private LocalDate date;
+    private Date date;
     private Integer warrantyPeriod;
     private User user;
 
@@ -30,7 +32,7 @@ public class Costs {
         this.id = id;
     }
 
-    @Column(name = "product")
+    @Column(name = "product", nullable = false)
     public String getProduct() {
         return product;
     }
@@ -48,13 +50,13 @@ public class Costs {
         this.purchaseAmount = purchaseAmount;
     }
 
-    @Column(name = "purchase_date")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    public LocalDate getDate() {
+    @Column(name = "purchase_date", columnDefinition = "DATE")
+    @NotNull
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

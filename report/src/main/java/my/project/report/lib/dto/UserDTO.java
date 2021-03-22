@@ -1,5 +1,6 @@
 package my.project.report.lib.dto;
 
+
 public class UserDTO {
     private String login;
 

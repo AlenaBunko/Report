@@ -10,9 +10,5 @@ public interface IUserDAO {
 
     boolean ifUserExists(String login);
 
-    User findById(Long id);
-
-//    User getCostsOwner(String product);
-
     Optional<User> getUserByLogin(String login, boolean initLazyObjects);
 }

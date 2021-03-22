@@ -1,8 +1,6 @@
 package my.project.report.controller;
 
 import my.project.report.lib.dto.RegisterFormDTO;
-import my.project.report.lib.dto.UserDTO;
-import my.project.report.lib.exception.UserNotFoundException;
 import my.project.report.model.User;
 import my.project.report.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
